@@ -85,7 +85,7 @@ while gameover == False:
     elif keys[UP] == True and isOnGround == True:
         vy = -8
         isOnGround = False
-        direction = DOWN
+        direction = UP
         #turn off velocity
     else:
         vx = 0
