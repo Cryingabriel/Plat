@@ -67,12 +67,12 @@ class Goomba():
         
 
 
-
+#fireball = pygame.image.load('') 
 metal = pygame.image.load('metal.png') #load your spritesheet
 dirt = pygame.image.load('dirt.png')
-Link = pygame.image.load('link.png') #load your spritesheet
-PotatoPic = pygame.image.load("potato1.jpg")
-Link.set_colorkey((255, 0, 255)) #this makes bright pink (255, 0, 255) transparent (sort of)
+link = pygame.image.load('link.png') #load your spritesheet
+PotatoPic = pygame.image.load("potato.jpg")
+link.set_colorkey((255, 0, 255)) #this makes bright pink (255, 0, 255) transparent (sort of)
 
 xpos = 400 #xpos of player
 ypos = 400 #ypos of player
@@ -98,24 +98,26 @@ while gameover == False:
       
         if event.type == pygame.KEYDOWN: #keyboard input
             if event.key == pygame.K_LEFT:
-                keys[LEFT]=True
-
-            elif event.key == pygame.K_UP:
-                keys[UP]=True
-            
+                keys[LEFT] = True
             elif event.key == pygame.K_RIGHT:
-                keys[RIGHT]=True
-        
+                keys[RIGHT] = True
+            elif event.key == pygame.K_UP:
+                keys[UP] = True
+            elif event.key == pygame.K_DOWN:
+                keys[DOWN] = True
+            elif event.key == pygame.K_SPACE:
+                keys[SPACE] = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
-                keys[LEFT]=False
-
-            elif event.key == pygame.K_UP:
-                keys[UP]=False
-            
+                keys[LEFT] = False
             elif event.key == pygame.K_RIGHT:
-                keys[RIGHT]=False
+                keys[RIGHT] = False
+            elif event.key == pygame.K_UP:
+                keys[UP] = False
+            elif event.key == pygame.K_DOWN:
+                keys[DOWN] = False
             elif event.key == pygame.K_SPACE:
+                keys[SPACE] = False
 
     #LEFT MOVEMENT
     if keys[LEFT] == True:
@@ -259,24 +261,9 @@ while gameover == False:
                 screen.blit(metal, (j * 50 + x_offset, i * 50 + y_offset), (0, 0, 50, 50))
 
 
-    #first platform
-    pygame.draw.rect(screen, (200, 0, 100), (100, 750, 100, 20))
-    
-    #second platform
-    pygame.draw.rect(screen, (100, 0, 200), (200, 650, 100, 20))
-    
-    #third platform
-    pygame.draw.rect(screen, (255, 40, 120), (300, 550, 100, 20))
-    
-    #fourth platform
-    pygame.draw.rect(screen, (200, 100, 120), (400, 450, 100, 20))
-    
-    #fith platform
-    pygame.draw.rect(screen, (135, 80, 250), (500, 350, 100, 20))
 
 
-
-    screen.blit(link, (xpos, ypos), (framewidth*framenum, rownum*frameheight, framewidth, frameheight))
+    screen.blit(link, (xpos, ypos), (frameWidth*frameNum, RowNum*frameHeight, frameWidth, frameHeight))
 
     screen.blit(PotatoPic, (200 + x_offset, 200 + y_offset))
 
