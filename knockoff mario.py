@@ -1,4 +1,5 @@
 import pygame
+import math
 pygame.init()  
 pygame.display.set_caption('adding image')  # sets the window title
 screen = pygame.display.set_mode((800, 800))  # creates game screen
@@ -6,32 +7,53 @@ screen.fill((0,0,0))
 clock = pygame.time.Clock() #set up clock
 gameover = False #variable to run our game loop
 
+#MAP: 1 is grass, 2 is brick
+map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2,2],
+       [2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0, 2 ,2 ,2, 2,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ,0 ,0, 0,0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0 ,0 ,2, 2,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 2, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,2 ,2, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 2, 0, 0, 0, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 2, 2, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0 ,0 ,2, 2,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 2, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,2 ,2, 0,2],
+       [2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 ,0 ,0, 0,0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 2, 2, 2, 0, 0, 2, 2, 2, 2, 0, 0 ,0 ,0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0 ,0 ,2, 2,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0,2],
+       [2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0 ,0 ,0, 0,0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,2 ,2, 0,2],
+       [2, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 2, 2 ,2 ,0, 0,0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0 ,2 ,0, 0,2],
+       [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2,2]]
+
 
 #CONSTANTS
 LEFT=0
 RIGHT=1
 UP = 2
 DOWN = 3
+SPACE = 4
 
-
-link = pygame.image.load('boxpep.png')
-
-framewidth = 20
-frameheight = 40
-rownum = 1
-framenum = 0
+#animation variables variables
+frameWidth = 32
+frameHeight = 46
+RowNum = 0 #for left animation, this will need to change for other animations
+frameNum = 0
 ticker = 0
+direction = DOWN
 
 #player variables
-xpos = 500 #xpos of player
-ypos = 200 #ypos of player
-vx = 0 #x velocity of player
-vy = 0 #y velocity of player
-keys = [False, False, False, False] #this list holds whether each key has been pressed
-isOnGround = False #this variable stops gravity from pulling you down more when on a platform
-
-
-
 class Goomba():
     def __init__(self, x, y):
         self.xpos = x
@@ -43,6 +65,25 @@ class Goomba():
             self.xpos+= 50*self.direction
         return time
         
+
+
+
+metal = pygame.image.load('metal.png') #load your spritesheet
+dirt = pygame.image.load('dirt.png')
+Link = pygame.image.load('link.png') #load your spritesheet
+PotatoPic = pygame.image.load("potato1.jpg")
+Link.set_colorkey((255, 0, 255)) #this makes bright pink (255, 0, 255) transparent (sort of)
+
+xpos = 400 #xpos of player
+ypos = 400 #ypos of player
+vx = 0 #x velocity of player
+vy = 0 #y velocity of player
+x_offset = 0
+y_offset = 0
+keys = [False, False, False, False, False] #this list holds whether each key has been pressed
+isOnGround = False #this variable stops gravity from pulling you down more when on a platform
+movingx = False
+movingy = False
 
 
 
@@ -74,52 +115,105 @@ while gameover == False:
             
             elif event.key == pygame.K_RIGHT:
                 keys[RIGHT]=False
+            elif event.key == pygame.K_SPACE:
 
-    if keys[LEFT]==True:
-        vx=-3
-        direction = LEFT    
-    elif keys[RIGHT]==True:
-        vx=3
+    #LEFT MOVEMENT
+    if keys[LEFT] == True:
+        if xpos > 400:
+            vx = -3
+        elif x_offset < 0:
+            x_offset+=3
+            vx = 0
+        else:
+            vx = -3
+        RowNum = 0
+        direction = LEFT
+        movingx = True
+       
+    #RIGHT MOVEMENT
+    elif keys[RIGHT] == True:
+        if xpos < 400:
+            vx = 3
+        elif x_offset > -800:
+            x_offset-=3
+            vx = 0
+        else:
+            vx = 3
+        RowNum = 1
         direction = RIGHT
-        #JUMPING
-    elif keys[UP] == True and isOnGround == True:
-        vy = -8
-        isOnGround = False
-        direction = UP
-        #turn off velocity
+        movingx = True
+    #turn off velocity
     else:
         vx = 0
-    #collision
-    if xpos>100 and xpos<200 and ypos+40 >750 and ypos+40 <770:
-        ypos = 750-40
-        isOnGround = True
-        vy = 0
-    elif xpos>200 and xpos<300 and ypos+40 >650 and ypos+40 <670:
-        ypos = 650-40
-        isOnGround = True
-        vy = 0
-    elif xpos>300 and xpos<400 and ypos+40 >550 and ypos+40 <570:
-        ypos = 550-40
-        isOnGround = True
-        vy = 0
-    elif xpos>400 and xpos<500 and ypos+40 >450 and ypos+40 <470:
-        ypos = 450-40
-        isOnGround = True
-        vy = 0
-    elif xpos>500 and xpos<600 and ypos+40 >350 and ypos+40 <370:
-        ypos = 350-40
-        isOnGround = True
-        vy = 0
-    elif xpos<=0:
-        xpos = 0
-    elif xpos+20>=800:
-        xpos = 800-20
-    elif ypos <=0:
-        ypos = 0
-        yvel = 0
-    else:
-        isOnGround = False
+        movingx = False
 
+    #check space for shooting
+    
+       
+    #DOWN MOVEMENT
+    if keys[DOWN] == True:
+        if ypos < 400:
+            vy = 3
+        elif y_offset > -800:
+            y_offset-=3
+            vy = 0
+        else:
+            vy = 3
+        RowNum = 1
+        RowNum = 3
+        direction = DOWN
+        movingy = True
+
+         #UP MOVEMENT
+    elif keys[UP] == True:
+        if ypos > 400:
+            vy = -3
+        elif y_offset < 0:
+            y_offset+=3
+            vy = 0
+        else:
+            vy = -3
+        RowNum = 0
+        RowNum = 2
+        direction = UP
+        movingy = True
+    #turn off velocity
+    else:
+        vy = 0
+        movingy = False
+       
+
+
+
+    xpos+=vx #update player xpos
+    ypos+=vy
+
+
+
+    #collision
+    #down collision
+    if map[int((ypos - y_offset + frameHeight) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
+        ypos-=3
+   
+    #up collision
+    if map[int((ypos - y_offset) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
+        ypos+=3
+       
+    #left collision
+    if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 10) / 50)] == 2 :
+        xpos+=3
+
+    
+
+       
+    #right collision
+    if map[int((ypos - y_offset) / 50)][int((xpos - x_offset + frameWidth + 5) / 50)] == 2:
+        xpos-=3    
+
+    if xpos + frameWidth > 800:
+        xpos-=3
+    if xpos < 0:
+        xpos+=3
 
 
 
@@ -143,9 +237,27 @@ while gameover == False:
     ypos+=vy
 
 
+    #moving animation
+    if movingx == True or movingy == True: #animate when moving
+        ticker+=1
+        if ticker % 10 == 0: #only change frames every 10 ticks
+          frameNum+=1
+        if frameNum > 7:
+           frameNum = 0
+
+
 
     #Render section
     screen.fill((0,0,0))
+
+    #map
+    for i in range(28):
+        for j in range(33):
+            if map[i][j] == 1:
+                screen.blit(dirt, (j * 50 + x_offset, i * 50 + y_offset), (0, 0, 50, 50))
+            if map[i][j] == 2:
+                screen.blit(metal, (j * 50 + x_offset, i * 50 + y_offset), (0, 0, 50, 50))
+
 
     #first platform
     pygame.draw.rect(screen, (200, 0, 100), (100, 750, 100, 20))
@@ -166,5 +278,6 @@ while gameover == False:
 
     screen.blit(link, (xpos, ypos), (framewidth*framenum, rownum*frameheight, framewidth, frameheight))
 
+    screen.blit(PotatoPic, (200 + x_offset, 200 + y_offset))
 
     pygame.display.flip()#this actually puts the pixel on the screen
