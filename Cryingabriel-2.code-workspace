@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Cryingabriel",
+			"path": ".."
+		},
+		{
+			"name": "New folder",
+			"path": "../../Hangman/New folder"
+		}
+	],
+	"settings": {}
+}
