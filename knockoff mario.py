@@ -18,7 +18,7 @@ link = pygame.image.load('boxpep.png')
 
 framewidth = 20
 frameheight = 40
-rownum = 0
+rownum = 1
 framenum = 0
 ticker = 0
 
