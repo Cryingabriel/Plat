@@ -202,11 +202,11 @@ while not gameover:
        
     ball.move()
 
-       
-    #DOWN MOVEMENT
-    if keys[DOWN] == True:
+
+
+    if ground == False:
         if ypos < 400:
-            vy = 3
+            vy = 1
         elif y_offset > -900:
             y_offset-=3
             vy = 0
@@ -217,42 +217,61 @@ while not gameover:
         direction = DOWN
         movingy = True
 
+         #UP MOVEMENT0
+
+
+    #DOWN MOVEMENT
+    #if keys[DOWN] == True:
+     #   if ypos < 400:
+      #      vy = 3
+       # elif y_offset > -900:
+        #    y_offset-=3
+         #   vy = 0
+        #else:
+         #   vy = 3
+        #RowNum = 1
+        #RowNum = 3
+        #direction = DOWN
+        #movingy = True
+
          #UP MOVEMENT
-    elif keys[UP] == True and ground == True:
+    if keys[UP] == True and ground == True:
         if ypos > 400:
-            vy = -8
+            vy = -50
         elif y_offset < 800:
-            y_offset+=3
+            y_offset+=8
             vy = 0
         else:
             vy = -8
         RowNum = 0
         RowNum = 2
         direction = UP
+        ground = False
         movingy = True
     #turn off velocity
     else:
         vy = 0
         movingy = False
        
+    if ground == False:
+        vy+=.4
 
 
-
-    xpos+=vx #update player xpos
-    ypos+=vy
 
    
     #COLLISION
    
     #down collision
     if map[int((ypos - y_offset + frameHeight) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
-        ypos-=3
+        ground = True
+    else:
         ground = False
+
    
     #up collision
     if map[int((ypos - y_offset) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
-        ypos+=3
-        ground = True
+        ypos += 3
+        vy = 0
        
     #left collision
     if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 10) / 50)] == 2 :
@@ -267,6 +286,11 @@ while not gameover:
         xpos-=3
     if xpos < 0:
         xpos+=3
+
+    xpos+=vx #update player xpos
+    ypos+=vy
+
+    
 
     #if ypos + frameHeight > 800:
         #ypos-=3
