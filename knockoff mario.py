@@ -213,8 +213,6 @@ while not gameover:
             vy = 0
         else:
             vy = 3
-        RowNum = 1
-        RowNum = 3
         direction = DOWN
         movingy = True
 
