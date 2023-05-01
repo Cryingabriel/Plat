@@ -71,13 +71,13 @@ class fireball:
 ball = fireball()
 
 #MAP: 1 is grass, 2 is brick
-map = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0],
+map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2 ,0 ,0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2 ,0 ,0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0, 2 ,2 ,2, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
@@ -123,6 +123,9 @@ keys = [False, False, False, False, False] #this list holds whether each key has
 isOnGround = False #this variable stops gravity from pulling you down more when on a platform
 movingx = False
 movingy = False
+ground = False
+
+
 
 #animation variables variables
 frameWidth = 32
@@ -204,7 +207,7 @@ while not gameover:
     if keys[DOWN] == True:
         if ypos < 400:
             vy = 3
-        elif y_offset > -600:
+        elif y_offset > -900:
             y_offset-=3
             vy = 0
         else:
@@ -215,14 +218,14 @@ while not gameover:
         movingy = True
 
          #UP MOVEMENT
-    elif keys[UP] == True:
+    elif keys[UP] == True and ground == True:
         if ypos > 400:
-            vy = -3
+            vy = -8
         elif y_offset < 800:
             y_offset+=3
             vy = 0
         else:
-            vy = -3
+            vy = -8
         RowNum = 0
         RowNum = 2
         direction = UP
@@ -244,10 +247,12 @@ while not gameover:
     #down collision
     if map[int((ypos - y_offset + frameHeight) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
         ypos-=3
+        ground = False
    
     #up collision
     if map[int((ypos - y_offset) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
         ypos+=3
+        ground = True
        
     #left collision
     if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 10) / 50)] == 2 :
@@ -300,7 +305,7 @@ while not gameover:
     screen.fill((0, 0, 0)) #wipe screen so it doesn't smear
    
     #draw map
-    for i in range(28):
+    for i in range(34):
         for j in range(33):
             if map[i][j] == 1:
                 screen.blit(dirt, (j * 50 + x_offset, i * 50 + y_offset), (0, 0, 50, 50))
