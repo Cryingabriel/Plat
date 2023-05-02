@@ -114,8 +114,8 @@ Link.set_colorkey((255, 0, 255)) #this makes bright pink (255, 0, 255) transpare
 militree = pygame.image.load("GoombaHeadaa.png")
 
 #player variables
-xpos = 400 #xpos of player
-ypos = 400 #ypos of player
+xpos = 50 #xpos of player
+ypos = 1600 #ypos of player
 vx = 0 #x velocity of player
 vy = 0 #y velocity of player
 x_offset = 0
