@@ -27,7 +27,7 @@ class Goomba():
             self.xpos+= 50*self.direction
         return time
     def draw(self):
-        screen.blit(PotatoPic, (200 + x_offset, 200 + y_offset))
+        pygame.draw.rect(screen, (200, 200, 200), (-400,-400, 25, 25))
         
 
 
@@ -42,19 +42,33 @@ class fireball:
         self.ypos = y + 20
         self.isAlive = True
         self.direction = dir
-    def move(self):
+        
+    def moveR(self):
         if self.direction == RIGHT:
             self.xpos+=20
-        elif self.direction == LEFT:
+    def moveL(self):
+        if self.direction == LEFT:
             self.xpos-=20
-        elif self.direction == UP:
+    def moveU(self):
+        if self.direction == UP:
             self.ypos-=20
-        elif self.direction == DOWN:
+    def moveD(self):
+        if self.direction == DOWN:
             self.ypos+=20
     
         #add other directions here
-    def draw(self):
-        screen.blit(dart, (self.xpos, self.ypos))
+    def drawLEFT(self):
+        screen.blit(dartL, (self.xpos, self.ypos))
+        
+    def drawRIGHT(self):
+        screen.blit(dartR, (self.xpos, self.ypos))
+
+    def drawUP(self):
+        screen.blit(dartU, (self.xpos, self.ypos))
+        
+    def drawDOWN(self):
+        screen.blit(dartD, (self.xpos, self.ypos))
+        
     def collide(self, x, y):
         if math.sqrt((self.xpos - x) ** 2 + (self.ypos - y) ** 2) < 25: #25 is radius of fireball + radius of potato
             print("collision!")
@@ -105,7 +119,10 @@ map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
        [2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2],
        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2]]
 
-dart = pygame.image.load('dart-left.png')
+dartD = pygame.image.load('dart-down.png')
+dartU = pygame.image.load('dart-up.png')
+dartR = pygame.image.load('dart-right.png')
+dartL = pygame.image.load('dart-left.png')
 brick = pygame.image.load('brick.png') #load your spritesheet
 dirt = pygame.image.load('bad.jpg')
 Link = pygame.image.load('link.png') #load your spritesheet
@@ -201,7 +218,10 @@ while not gameover:
     if keys[SPACE] == True:
         ball.shoot(xpos, ypos, direction)
        
-    ball.move()
+    ball.moveL()
+    ball.moveR()
+    ball.moveU()
+    ball.moveD()
 
 
 
@@ -261,7 +281,7 @@ while not gameover:
     #COLLISION
    
     #down collision
-    if map[int((ypos - y_offset + frameHeight) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
+    if map[int((ypos - y_offset + frameHeight + 5) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
         ground = True
     else:
         ground = False
@@ -273,7 +293,7 @@ while not gameover:
         vy = 0
        
     #left collision
-    if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 10) / 50)] == 2 :
+    if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 5) / 50)] == 2 :
         xpos+=3
        
     #right collision
@@ -336,8 +356,18 @@ while not gameover:
                 screen.blit(brick, (j * 50 + x_offset, i * 50 + y_offset), (0, 0, 50, 50))
    
     #draw fireball
-    if ball.isAlive == True:
-        ball.draw()
+    if ball.isAlive == True and ball.direction == LEFT:
+        ball.drawLEFT()
+
+    if ball.isAlive == True and ball.direction == RIGHT:
+        ball.drawRIGHT()
+
+    if ball.isAlive == True and ball.direction == UP:
+        ball.drawUP()
+
+    if ball.isAlive == True and ball.direction == DOWN:
+        ball.drawDOWN()
+
     #draw player
     screen.blit(Link, (xpos, ypos), (frameWidth * frameNum, RowNum * frameHeight, frameWidth, frameHeight))
     #draw potato
