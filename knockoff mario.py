@@ -21,15 +21,17 @@ class Goomba():
         self.xpos = x
         self.ypos = y
         self.direction = 1
-    
+        self.vy = 0
+        self.isa = True
     def move(self, time):
         if ticker % 100==0:
             self.xpos+= 50*self.direction
         return time
     def draw(self):
-        pygame.draw.rect(screen, (200, 200, 200), (-400,-400, 25, 25))
+        if self.isa == True:
+            pygame.draw.rect(screen, (0, 200, 200), (self.xpos, self.ypos, 25, 25))
         
-
+goomba = Goomba(200,1400)
 
 class fireball:
     def __init__(self):
@@ -97,7 +99,7 @@ map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
        [2, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
-       [2, 2, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 2, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
@@ -144,6 +146,11 @@ movingy = False
 ground = False
 
 
+#enemy Variables
+timer = 0
+
+
+
 
 #animation variables variables
 frameWidth = 32
@@ -155,7 +162,7 @@ direction = DOWN
 
 while not gameover:
     clock.tick(60) #FPS
-   
+    timer +=1
     for event in pygame.event.get(): #quit game if x is pressed in top corner
         if event.type == pygame.QUIT:
             gameover = True
@@ -281,7 +288,7 @@ while not gameover:
     #COLLISION
    
     #down collision
-    if map[int((ypos - y_offset + frameHeight + 5) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
+    if map[int((ypos - y_offset + frameHeight) / 50)][int((xpos - x_offset + frameWidth / 2) / 50)] == 2:
         ground = True
     else:
         ground = False
@@ -293,7 +300,7 @@ while not gameover:
         vy = 0
        
     #left collision
-    if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 5) / 50)] == 2 :
+    if map[int((ypos - y_offset + frameHeight - 10) / 50)][int((xpos - x_offset - 10) / 50)] == 2 :
         xpos+=3
        
     #right collision
@@ -373,8 +380,18 @@ while not gameover:
     #draw potato
     if potato == True:
         screen.blit(PotatoPic, (200 + x_offset, 200 + y_offset))
-    pygame.display.flip()#this actually puts the pixel on the screen
+
+
+    #Draw Goomba
+    goomba.draw()
    
+    #Move Goomba
+    goomba.move(timer)
+
+
+    pygame.display.flip()#this actually puts the pixel on the screen
+
+
 #end game
 #loop------------------------------------------------------------------------------
 pygame.quit()
