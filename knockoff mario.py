@@ -149,6 +149,7 @@ class player:
         else:
             self.vy = 0
             self.movingy = False
+
     
     #COLLISION
     
