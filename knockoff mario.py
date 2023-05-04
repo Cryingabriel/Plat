@@ -51,8 +51,8 @@ class player:
       self.movingx = False
       self.movingy = False
       #animation variables variables
-      self.frameWidth = 32
-      self.frameHeight = 46
+      self.frameWidth = 500
+      self.frameHeight = 500
       self.RowNum = 0 #for left animation, this will need to change for other animations
       self.frameNum = 0
       self.ticker = 0
@@ -360,7 +360,10 @@ while not gameover:
            frameNum = 0
  
     if p1.xpos > 386 and p1.xpos < 400 and p1.ypos < 160 and p1.ypos > 50:
-            gameover = True
+        gameover = True
+        
+    if p1.lives <= 0:
+        gameover = True
             
     # RENDER--------------------------------------------------------------------------------
     # Once we've figured out what frame we're on and where we are, time to
