@@ -64,11 +64,11 @@ class player:
         if self.lives > 0:
             if self.movingx == True or self.movingy == True: #animate when moving
                 ticker+=1
-            if ticker % 10 == 0: #only change frames every 10 ticks
-                self.frameNum+=1
-            if self.frameNum > 7: 
-                self.frameNum = 0
-                screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
+                if ticker % 10 == 0: #only change frames every 10 ticks
+                    self.frameNum+=1
+                if self.frameNum > 7: 
+                    self.frameNum = 0
+            screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
             return ticker
 
     def move(self, keys, map):
@@ -80,9 +80,9 @@ class player:
                 self.vx = 0
             else:
                 self.vx = -3
-                self.RowNum = 0
-                self.direction = LEFT
-                self.movingx = True
+            self.RowNum = 0
+            self.direction = LEFT
+            self.movingx = True
         
         #RIGHT MOVEMENT
         elif keys[RIGHT] == True:
@@ -93,9 +93,9 @@ class player:
                 self.vx = 0
             else:
                 self.vx = 3
-                self.RowNum = 1
-                self.direction = RIGHT
-                self.movingx = True
+            self.RowNum = 1
+            self.direction = RIGHT
+            self.movingx = True
         #turn off velocity
         else:
             self.vx = 0
@@ -109,8 +109,8 @@ class player:
                 self.vy = 0
             else:
                 self.vy = 3
-                self.direction = DOWN
-                self.movingy = True
+            self.direction = DOWN
+            self.movingy = True
 
          #UP MOVEMENT
         elif keys[UP] == True and self.isOnGround == True:
@@ -121,10 +121,10 @@ class player:
                 self.vy = 0
             else:
                 self.vy = -3
-                self.RowNum = 0
-                self.RowNum = 2
-                self.direction = UP
-                self.movingy = True
+            self.RowNum = 0
+            self.RowNum = 2
+            self.direction = UP
+            self.movingy = True
         #turn off velocity
         else:
             self.vy = 0
@@ -406,7 +406,7 @@ while not gameover:
 #pygame.quit()
 
 
-#END GAME SCREEN IF U WANT----------------------------------------------------------
+#END GAME SCREEN IF U WANT---------------------------------------------
 #import pygame
 #import random
 #import math
