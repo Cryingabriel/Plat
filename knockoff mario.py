@@ -27,18 +27,7 @@ PotatoPic = pygame.image.load("bad.jpg")
 Link.set_colorkey((255, 0, 255)) #this makes bright pink (255, 0, 255) transparent (sort of)
 militree = pygame.image.load("GoombaHeadaa.png")
 
-#player variables
-xpos = 50 #xpos of player
-ypos = 1600 #ypos of player
-vx = 0 #x velocity of player
-vy = 0 #y velocity of player
-x_offset = 0
-y_offset = 0
 keys = [False, False, False, False, False] #this list holds whether each key has been pressed
-isOnGround = False #this variable stops gravity from pulling you down more when on a platform
-movingx = False
-movingy = False
-ground = False
 
 
 #enemy Variables
@@ -76,7 +65,7 @@ class player:
         screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
         return ticker
 
-    def move(self, keys, map, ground):
+    def move(self, keys, map):
         if keys[LEFT] == True:
             if self.xpos > 400:
                 self.vx = -3
@@ -106,36 +95,7 @@ class player:
             self.vx = 0
             self.movingx = False
    
-        #DOWN MOVEMENT
-        if keys[DOWN] == True:
-            if self.ypos < 400:
-                self.vy = 3
-            elif self.y_offset > -800:
-                self.y_offset-=3
-                self.vy = 0
-            else:
-                self.vy = 3
-                self.RowNum = 1
-                self.RowNum = 3
-                self.direction = DOWN
-                self.movingy = True
-
-         #UP MOVEMENT
-        elif keys[UP] == True:
-            if self.ypos > 400:
-                self.vy = -3
-            elif self.y_offset < 0:
-                self.y_offset+=3
-                self.vy = 0
-            else:
-                self.vy = -3
-                self.RowNum = 0
-                self.RowNum = 2
-                self.direction = UP
-                self.movingy = True
-
-
-        if ground == False:
+        if self.isOnGround == False:
             if self.ypos < 810:
                 self.vy = 3
             elif self.y_offset > -900:
@@ -150,14 +110,31 @@ class player:
             self.vy = 0
             self.movingy = False
 
+         #UP MOVEMENT
+        if keys[UP] == True:
+            if self.ypos > 400:
+                self.vy = -3
+            elif self.y_offset < 0:
+                self.y_offset+=3
+                self.vy = 0
+            else:
+                self.vy = -3
+                self.RowNum = 0
+                self.RowNum = 2
+                self.direction = UP
+                self.movingy = True
+
+
+        
+
     
     #COLLISION
     
     #down collision
         if map[int((self.ypos - self.y_offset + self.frameHeight) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
-            ground = True
+            self.isOnGround = True
         else:
-            ground = False
+            self.isOnGround = False
     
     #up collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
@@ -343,20 +320,6 @@ while not gameover:
 
 
 
-    if ground == False:
-        if ypos < 810:
-            vy = 3
-        elif y_offset > -900:
-            y_offset-=3
-            vy = 0
-        else:
-            vy = 3
-        direction = DOWN
-        movingy = True
-
-         #UP MOVEMENT0
-
-
     #DOWN MOVEMENT
     #if keys[DOWN] == True:
         #if ypos < 400:
@@ -385,7 +348,7 @@ while not gameover:
     #elif potato == False:
         #ball.collide(215, 215) == False
 
-    elif ball.collide(xpos, ypos) == 2:
+    elif ball.collide(p1.xpos, p1.ypos) == 2:
         ball.isAlive = False
         #you probably want to do other stuff here too, like kill the potato
         #eventually
@@ -406,7 +369,9 @@ while not gameover:
     # Once we've figured out what frame we're on and where we are, time to
     # render.
 
-    p1.move(keys, map, ground)
+
+
+    p1.move(keys, map,)
 
            
     screen.fill((0, 0, 0)) #wipe screen so it doesn't smear
