@@ -16,7 +16,7 @@ RIGHT = 1
 UP = 2
 DOWN = 3
 SPACE = 4
-ye = print("Yuh Brandon cute")
+ye = print("Yuh Brandon cute😂")
 potato = True
 
 #images
@@ -51,8 +51,8 @@ class player:
       self.movingx = False
       self.movingy = False
       #animation variables variables
-      self.frameWidth = 500
-      self.frameHeight = 500
+      self.frameWidth = 32
+      self.frameHeight = 46
       self.RowNum = 0 #for left animation, this will need to change for other animations
       self.frameNum = 0
       self.ticker = 0
@@ -115,12 +115,12 @@ class player:
          #UP MOVEMENT
         elif keys[UP] == True and self.isOnGround == True:
             if self.ypos > 400:
-                self.vy = -40
+                self.vy += -40
             elif self.y_offset < 0:
                 self.y_offset+=3
                 self.vy = 0
             else:
-                self.vy = -3
+                self.vy = -40
             self.RowNum = 0
             self.RowNum = 2
             self.direction = UP
