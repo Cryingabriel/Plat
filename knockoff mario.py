@@ -414,26 +414,29 @@ while not gameover:
 #pygame.quit()
 
 
+
 #END GAME SCREEN IF U WANT---------------------------------------------
 import pygame
 import random
 import math
 pygame.init()  
-pygame.display.set_caption("YIPPIE")  # sets the window title
-screen = pygame.display.set_mode((1000, 1000))  # creates game scre
+pygame.display.set_caption("EEL")  # sets the window title
+screen = pygame.display.set_mode((1280, 720))  # creates game screen
 screen.fill((0,0,0))
-win1 = pygame.image.load('win1.jpg')
 Win = pygame.image.load("winning.png")
+win1 = pygame.image.load('win1.jpg')
 clock = pygame.time.Clock() #set up clock
 
 
 
 while not end:
+    
     screen.blit(Win, (0,0))
     font = pygame.font.Font(None, 65)
     text = font.render(str("YOU WIN"),1, (255,255,255))
-    screen.blit(text, (435, 435))
-    screen.blit(win1, (-100, 200))
+    screen.blit(text, (480, 435))
+    screen.blit(win1, (-50, 450))
+
     pygame.display.flip()
 pygame.quit()
 
