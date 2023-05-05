@@ -415,20 +415,20 @@ while not gameover:
 
 
 #END GAME SCREEN IF U WANT---------------------------------------------
-#import pygame
-#import random
-#import math
-#pygame.init()  
-#pygame.display.set_caption("EEL")  # sets the window title
-#screen = pygame.display.set_mode((1000, 1000))  # creates game screen
-#screen.fill((0,0,0))
-#clock = pygame.time.Clock() #set up clock
+import pygame
+import random
+import math
+pygame.init()  
+pygame.display.set_caption("EEL")  # sets the window title
+screen = pygame.display.set_mode((1000, 1000))  # creates game screen
+screen.fill((0,0,0))
+clock = pygame.time.Clock() #set up clock
 
-#while not end:
-#    screen.fill((0,0,255))
-#    font = pygame.font.Font(None, 65)
-#    text = font.render(str("YOU WIN"),1, (255,255,255))
-#    screen.blit(text, (435, 435))
-#    pygame.display.flip()
-#pygame.quit()
+while not end:
+    screen.fill((0,0,255))
+    font = pygame.font.Font(None, 65)
+    text = font.render(str("You Win :)"),1, (255,255,255))
+    screen.blit(text, (406, 450))
+    pygame.display.flip()
+pygame.quit()
 
