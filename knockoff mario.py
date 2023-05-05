@@ -175,8 +175,8 @@ class player:
 
 class Goomba():
     def __init__(self, x, y):
-        self.xpos = 700
-        self.ypos = 875
+        self.xpos = x
+        self.ypos = y
         self.direction = 1
         self.vy = 0
         self.isa = True
@@ -189,7 +189,7 @@ class Goomba():
             screen.blit(militree, (self.xpos + x_offset, self.ypos + y_offset))
 
 
-cBASS = Goomba(20,60)
+cBASS = Goomba(700,865)
 
 class fireball:
     def __init__(self):
@@ -419,16 +419,21 @@ import pygame
 import random
 import math
 pygame.init()  
-pygame.display.set_caption("EEL")  # sets the window title
-screen = pygame.display.set_mode((1000, 1000))  # creates game screen
+pygame.display.set_caption("YIPPIE")  # sets the window title
+screen = pygame.display.set_mode((1000, 1000))  # creates game scre
 screen.fill((0,0,0))
+win1 = pygame.image.load('win1.jpg')
+Win = pygame.image.load("winning.png")
 clock = pygame.time.Clock() #set up clock
 
+
+
 while not end:
-    screen.fill((0,0,255))
+    screen.blit(Win, (0,0))
     font = pygame.font.Font(None, 65)
-    text = font.render(str("You Win :)"),1, (255,255,255))
-    screen.blit(text, (406, 450))
+    text = font.render(str("YOU WIN"),1, (255,255,255))
+    screen.blit(text, (435, 435))
+    screen.blit(win1, (-100, 200))
     pygame.display.flip()
 pygame.quit()
 
