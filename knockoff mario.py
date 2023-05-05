@@ -42,7 +42,7 @@ class player:
     def __init__(self):
       #player variables
       self.xpos = 50 #xpos of player
-      self.ypos = 160 #ypos of player
+      self.ypos = 1600 #ypos of player
       self.vx = 0 #x velocity of player
       self.vy = 0 #y velocity of player
       self.x_offset = 0
@@ -109,18 +109,18 @@ class player:
                 self.vy = 0
             else:
                 self.vy = 3
-            self.direction = DOWN
+                self.direction = DOWN
             self.movingy = True
 
          #UP MOVEMENT
         elif keys[UP] == True and self.isOnGround == True:
             if self.ypos > 400:
-                self.vy += -40
+                self.vy = -50
             elif self.y_offset < 0:
-                self.y_offset+=3
+                self.y_offset+=50
                 self.vy = 0
             else:
-                self.vy = -40
+                self.vy = -50
             self.RowNum = 0
             self.RowNum = 2
             self.direction = UP
@@ -152,7 +152,7 @@ class player:
         
     #right collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2:
-            self.vx-= 3 
+            self.vx-= 4
 
     #stop moving if you hit edge of screen (will be removed for scrolling)
         if self.xpos + self.frameWidth > 800:
@@ -162,14 +162,15 @@ class player:
 
         self.xpos+=self.vx #update player xpos
         self.ypos+=self.vy
-
-
-
-
-
-
-
-
+    
+    def ecollide(self, goombax, goombay):
+        if self.lives > 0:
+            if goombax > self.xpos:
+                if goombax < self.xpos + self.x_offset:
+                    if goombay > self.ypos + self.y_offset:
+                        if goombay < self.ypos:
+                            self.lives -= 1
+                            return self.lives
 
 
 class Goomba():
@@ -326,6 +327,10 @@ while not gameover:
 
 
 
+
+    if cBASS.isa == True:
+        p1.ecollide(cBASS.xpos, cBASS.ypos)
+
     #DOWN MOVEMENT
     #if keys[DOWN] == True:
         #if ypos < 400:
@@ -374,7 +379,7 @@ while not gameover:
     p1.move(keys, map)
 
            
-    screen.fill((0, 0, 0)) #wipe screen so it doesn't smear
+    screen.fill((66, 165, 245)) #wipe screen so it doesn't smear
    
     #draw map
     for i in range(34):
@@ -410,20 +415,20 @@ while not gameover:
 
 
 #END GAME SCREEN IF U WANT---------------------------------------------
-#import pygame
-#import random
-#import math
-#pygame.init()  
-#pygame.display.set_caption("EEL")  # sets the window title
-#screen = pygame.display.set_mode((1000, 1000))  # creates game screen
-#screen.fill((0,0,0))
-#clock = pygame.time.Clock() #set up clock
+import pygame
+import random
+import math
+pygame.init()  
+pygame.display.set_caption("EEL")  # sets the window title
+screen = pygame.display.set_mode((1000, 1000))  # creates game screen
+screen.fill((0,0,0))
+clock = pygame.time.Clock() #set up clock
 
-#while not end:
-#    screen.fill((0,0,255))
-#    font = pygame.font.Font(None, 65)
-#    text = font.render(str("YOU WIN"),1, (255,255,255))
-#    screen.blit(text, (435, 435))
-#    pygame.display.flip()
-#pygame.quit()
+while not end:
+    screen.fill((0,0,255))
+    font = pygame.font.Font(None, 65)
+    text = font.render(str("You Win :)"),1, (255,255,255))
+    screen.blit(text, (406, 450))
+    pygame.display.flip()
+pygame.quit()
 
