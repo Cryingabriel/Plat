@@ -3,7 +3,7 @@ import math
 
 
 pygame.init()  
-pygame.display.set_caption("CACA ASS  DOO DOO ASS GAME CARPAERA")
+pygame.display.set_caption("Knockoff Mario")
 screen = pygame.display.set_mode((832, 900))  # creates game screen
 screen.fill((0,0,0))
 clock = pygame.time.Clock() #set up clock
@@ -42,7 +42,7 @@ class player:
     def __init__(self):
       #player variables
       self.xpos = 50 #xpos of player
-      self.ypos = 1600 #ypos of player
+      self.ypos = 160 #ypos of player
       self.vx = 0 #x velocity of player
       self.vy = 0 #y velocity of player
       self.x_offset = 0
