@@ -301,7 +301,7 @@ while not end:
     
     screen.blit(Win, (0,0))
     font = pygame.font.Font(None, 65)
-    text = font.render(str("YOU WIN"),1, (255,255,255))
+    text = font.render(str("YOU WIN"), 1, (255,255,255))
     screen.blit(text, (480, 435))
     screen.blit(win1, (-50, 450))
 

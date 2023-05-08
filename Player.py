@@ -8,6 +8,7 @@ DOWN = 3
 SPACE = 4
 
 Link = pygame.image.load('link.png') 
+Link.set_colorkey((255, 0, 255))
 
 
 class player:
