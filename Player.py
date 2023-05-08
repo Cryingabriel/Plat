@@ -29,17 +29,19 @@ class player:
       self.frameNum = 0
       self.ticker = 0
       self.direction = DOWN
+      self.lives = 3
       
 
     def draw(self,screen, ticker):
-        if self.movingx == True or self.movingy == True: #animate when moving
-            ticker+=1
-        if ticker % 10 == 0: #only change frames every 10 ticks
-          self.frameNum+=1
-        if self.frameNum > 7: 
-           self.frameNum = 0
-        screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
-        return ticker
+        if self.lives > 0:
+            if self.movingx == True or self.movingy == True: #animate when moving
+                ticker+=1
+                if ticker % 10 == 0: #only change frames every 10 ticks
+                    self.frameNum+=1
+                if self.frameNum > 7: 
+                    self.frameNum = 0
+            screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
+            return ticker
 
     def move(self, keys, map):
         if keys[LEFT] == True:
@@ -50,9 +52,9 @@ class player:
                 self.vx = 0
             else:
                 self.vx = -3
-                self.RowNum = 0
-                self.direction = LEFT
-                self.movingx = True
+            self.RowNum = 0
+            self.direction = LEFT
+            self.movingx = True
         
         #RIGHT MOVEMENT
         elif keys[RIGHT] == True:
@@ -63,9 +65,9 @@ class player:
                 self.vx = 0
             else:
                 self.vx = 3
-                self.RowNum = 1
-                self.direction = RIGHT
-                self.movingx = True
+            self.RowNum = 1
+            self.direction = RIGHT
+            self.movingx = True
         #turn off velocity
         else:
             self.vx = 0
@@ -80,25 +82,25 @@ class player:
             else:
                 self.vy = 3
                 self.direction = DOWN
-                self.movingy = True
+            self.movingy = True
+
+         #UP MOVEMENT
+        elif keys[UP] == True and self.isOnGround == True:
+            if self.ypos > 400:
+                self.vy = -50
+            elif self.y_offset < 0:
+                self.y_offset+=50
+                self.vy = 0
+            else:
+                self.vy = -50
+            self.RowNum = 0
+            self.RowNum = 2
+            self.direction = UP
+            self.movingy = True
         #turn off velocity
         else:
             self.vy = 0
             self.movingy = False
-
-         #UP MOVEMENT
-        if keys[UP] == True:
-            if self.ypos > 400:
-                self.vy = -3
-            elif self.y_offset < 0:
-                self.y_offset+=3
-                self.vy = 0
-            else:
-                self.vy = -3
-                self.RowNum = 0
-                self.RowNum = 2
-                self.direction = UP
-                self.movingy = True
 
 
         
@@ -114,15 +116,15 @@ class player:
     
     #up collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
-            self.ypos+=3
+            self.vy+=3
         
     #left collision
         if map[int((self.ypos - self.y_offset + self.frameHeight - 10) / 50)][int((self.xpos - self.x_offset - 10) / 50)] == 2 :
-            self.xpos+=3
+            self.vx+=3
         
     #right collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2:
-            self.xpos-=3    
+            self.vx-= 4
 
     #stop moving if you hit edge of screen (will be removed for scrolling)
         if self.xpos + self.frameWidth > 800:
@@ -132,3 +134,12 @@ class player:
 
         self.xpos+=self.vx #update player xpos
         self.ypos+=self.vy
+    
+    def ecollide(self, goombax, goombay):
+        if self.lives > 0:
+            if goombax > self.xpos:
+                if goombax < self.xpos + self.x_offset:
+                    if goombay > self.ypos + self.y_offset:
+                        if goombay < self.ypos:
+                            self.lives -= 1
+                            return self.lives
