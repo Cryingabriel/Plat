@@ -122,6 +122,10 @@ class player:
     #up collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
             self.vy+=3
+
+    #WHEN YOU IN THE FLOOR
+        if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2 and map[int((self.ypos - self.y_offset + self.frameHeight) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
+            self.vy-=3
         
     #left collision
         if map[int((self.ypos - self.y_offset + self.frameHeight - 10) / 50)][int((self.xpos - self.x_offset - 10) / 50)] == 2 :
@@ -129,7 +133,7 @@ class player:
         
     #right collision
         if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2:
-            self.vx-= 4
+            self.vx-= 3
 
     #stop moving if you hit edge of screen (will be removed for scrolling)
         if self.xpos + self.frameWidth > 800:

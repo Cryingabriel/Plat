@@ -17,7 +17,7 @@ class rope:
         self.x_offset = 0
         self.y_offset = 0  
     def draw(self, screen, xoff, yoff):
-        pygame.draw.circle(screen, (250, 0, 250), (self.xpos+xoff, self.ypos+yoff), 20)
+        pygame.draw.(screen, (250, 0, 250), (self.xpos+xoff, self.ypos+yoff), 20)
 
     def move(self, map, ticker,  px, py, xoff, yoff):
         #check if player is direct line of sight
@@ -46,6 +46,20 @@ class rope:
                 self.direction = DOWN
      
 
+        if self.isOnGround == False:
+            if self.ypos < 810:
+                self.vy = 3
+            elif self.y_offset > -900:
+                self.y_offset-=3
+                self.vy = 0
+            else:
+                self.vy = 3
+                self.direction = DOWN
+            self.movingy = True
+        
+        
+        
+        
         #check for collision and change direction if you've bumped
         if self.direction == RIGHT and map[int((self.ypos ) / 50)][int( (self.xpos +20 )  / 50)] ==2:
             #print("bumped right!")
@@ -53,6 +67,11 @@ class rope:
         if self.direction == LEFT and map[int((self.ypos) / 50)][int( (self.xpos - 20 )  / 50)] ==2:
             #print("bumped left!")
             self.direction = RIGHT
+        if self.direction == DOWN and map[int((self.ypos) / 50)][int( (self.ypos + 20) / 50)] == 2:
+            self.isOnGround = True
+        else:
+            self.isOnGround = False
+
 
         if self.direction == LEFT and self.xpos == 400:
             self.direction = RIGHT
