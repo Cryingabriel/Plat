@@ -4,7 +4,7 @@ from Player import player
 
 pygame.init()  
 pygame.display.set_caption("Knockoff Mario")
-
+screen = pygame.display.set_mode((832, 900))  # creates game screen
 screen.fill((0,0,0))
 clock = pygame.time.Clock() #set up clock
 gameover = False #variable to run our game loop
