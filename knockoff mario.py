@@ -16,7 +16,7 @@ RIGHT = 1
 UP = 2
 DOWN = 3
 SPACE = 4
-ye = print("Yuh Brandon cute😂")
+ye = print("Yuh Brandon dork😂")
 potato = True
 
 #images
@@ -237,16 +237,11 @@ while not gameover:
         
     if p1.lives <= 0:
         gameover = True
-            
+    p1.move(keys, map)     
+    #Move Goomba
+    cBASS.move(timer) 
     # RENDER--------------------------------------------------------------------------------
-    # Once we've figured out what frame we're on and where we are, time to
-    # render.
 
-
-
-    p1.move(keys, map)
-
-           
     screen.fill((66, 165, 245)) #wipe screen so it doesn't smear
    
     #draw map
@@ -270,8 +265,7 @@ while not gameover:
     #Draw Goomba
     cBASS.draw(p1.x_offset, p1.y_offset)
    
-    #Move Goomba
-    cBASS.move(timer)
+
 
 
     pygame.display.flip()#this actually puts the pixel on the screen
@@ -284,27 +278,27 @@ while not gameover:
 
 
 #END GAME SCREEN IF U WANT---------------------------------------------
-import pygame
-import random
-import math
-pygame.init()  
-pygame.display.set_caption("EEL")  # sets the window title
-screen = pygame.display.set_mode((1280, 720))  # creates game screen
-screen.fill((0,0,0))
-Win = pygame.image.load("winning.png")
-win1 = pygame.image.load('win1.jpg')
-clock = pygame.time.Clock() #set up clock
+# import pygame
+# import random
+# import math
+# pygame.init()  
+# pygame.display.set_caption("EEL")  # sets the window title
+# screen = pygame.display.set_mode((1280, 720))  # creates game screen
+# screen.fill((0,0,0))
+# Win = pygame.image.load("winning.png")
+# win1 = pygame.image.load('win1.jpg')
+# clock = pygame.time.Clock() #set up clock
 
 
 
-while not end:
+# while not end:
     
-    screen.blit(Win, (0,0))
-    font = pygame.font.Font(None, 65)
-    text = font.render(str("YOU WIN"), 1, (255,255,255))
-    screen.blit(text, (480, 435))
-    screen.blit(win1, (-50, 450))
+#     screen.blit(Win, (0,0))
+#     font = pygame.font.Font(None, 65)
+#     text = font.render(str("YOU WIN"), 1, (255,255,255))
+#     screen.blit(text, (480, 435))
+#     screen.blit(win1, (-50, 450))
 
-    pygame.display.flip()
-pygame.quit()
+#     pygame.display.flip()
+# pygame.quit()
 
