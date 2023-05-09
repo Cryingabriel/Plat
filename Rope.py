@@ -17,7 +17,7 @@ class rope:
         self.x_offset = 0
         self.y_offset = 0  
     def draw(self, screen, xoff, yoff):
-        pygame.draw.(screen, (250, 0, 250), (self.xpos+xoff, self.ypos+yoff), 20)
+        pygame.draw.circle(screen, (250, 0, 250), (self.xpos+xoff, self.ypos+yoff), 20)
 
     def move(self, map, ticker,  px, py, xoff, yoff):
         #check if player is direct line of sight
