@@ -39,11 +39,11 @@ class rope:
         elif ticker%40==0:
             num = random.randrange(0, 4)
             if num == 0:
-                self.direction == RIGHT
+                self.direction = RIGHT
             elif num == 1:
-                self.direction == LEFT
+                self.direction = LEFT
             elif num == 3:
-                self.direction == DOWN
+                self.direction = DOWN
      
 
         #check for collision and change direction if you've bumped
@@ -55,7 +55,7 @@ class rope:
             self.direction = RIGHT
 
         if self.direction == LEFT and self.xpos == 400:
-            self.direction == RIGHT
+            self.direction = RIGHT
        
 #or actually move!
         elif self.direction == RIGHT:
