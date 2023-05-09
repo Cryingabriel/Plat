@@ -1,5 +1,5 @@
 import pygame
-
+from Rope import rope
 #CONSTANTS
 LEFT = 0
 RIGHT = 1
@@ -8,7 +8,6 @@ DOWN = 3
 SPACE = 4
 
 Link = pygame.image.load('link.png') 
-Link.set_colorkey((255, 0, 255))
 
 
 class player:
@@ -20,7 +19,6 @@ class player:
       self.vy = 0 #y velocity of player
       self.x_offset = 0
       self.y_offset = -900
-      self.yOffVel = 0
       self.isOnGround = False #this variable stops gravity from pulling you down more when on a platform
       self.movingx = False
       self.movingy = False
@@ -33,6 +31,7 @@ class player:
       self.direction = DOWN
       self.lives = 3
       
+      
 
     def draw(self,screen, ticker):
         if self.lives > 0:
@@ -43,11 +42,10 @@ class player:
                 if self.frameNum > 7: 
                     self.frameNum = 0
             screen.blit(Link, (self.xpos, self.ypos), (self.frameWidth * self.frameNum, self.RowNum * self.frameHeight, self.frameWidth, self.frameHeight)) 
+            print(self.xpos, self.ypos)
             return ticker
 
     def move(self, keys, map):
-        print("position:", self.xpos, self.ypos, "offsets:", self.x_offset, self.y_offset)
-        print("y offset is ", self.y_offset, end = " ")
         if keys[LEFT] == True:
             if self.xpos > 400:
                 self.vx = -3
@@ -59,6 +57,8 @@ class player:
             self.RowNum = 0
             self.direction = LEFT
             self.movingx = True
+
+       
         
         #RIGHT MOVEMENT
         elif keys[RIGHT] == True:
@@ -76,45 +76,13 @@ class player:
         else:
             self.vx = 0
             self.movingx = False
-
-   #GRAVITY SECTION---------------------
-        if self.isOnGround == False:
-            #if self.ypos < 810: #if you're not at the bottom of the screen yet, pull character down
-            #    self.vy = 3
-            #    print("applying gravity")
-            #if self.y_offset > -900:
-                self.yOffVel-=1 #gravity
-                #self.vy = 0
-                print("gravity section setting vy to 0")
-            #else: #this part seems redundant
-            #    self.vy = 3
-            #    self.direction = DOWN
-            #self.movingy = True
-        else:
-            self.yOffVel = 0
-
-         #UP MOVEMENT---------------------------------------------------------
-        if keys[UP] == True and self.isOnGround == True:
-            print("inside up movement")
-            #if self.ypos > 400:
-            #    self.vy = -5
-            #if self.y_offset < 0:
-            self.yOffVel=5
-             #   self.vy = 0
-              #  print("offset less than 0")
-        else:
-            self.yOffVel = 0
-            #    self.vy = -5
-
-
-   #GRAVITY SECTION---------------------
+   
         if self.isOnGround == False:
             if self.ypos < 810:
                 self.vy = 3
             elif self.y_offset > -900:
-                self.y_offset-=1 #gravity
-                #self.vy = 0
-                print("gravity section setting vy to 0")
+                self.y_offset-=3
+                self.vy = 0
             else:
                 self.vy = 3
                 self.direction = DOWN
@@ -123,64 +91,45 @@ class player:
          #UP MOVEMENT
         elif keys[UP] == True and self.isOnGround == True:
             if self.ypos > 400:
-                self.vy = -5
+                self.vy = -50
             elif self.y_offset < 0:
-                self.y_offset+=5
+                self.y_offset+=50
                 self.vy = 0
-                print("offset less than 0")
             else:
-                self.vy = -5
+                self.vy = -50
             self.RowNum = 0
             self.RowNum = 2
             self.direction = UP
             self.movingy = True
         #turn off velocity
-        # else:
-        #     self.vy = 0
-        #     print("setting y vel to 0")
-        #     self.movingy = False
-#=======
         else:
             self.vy = 0
-            print("setting y vel to 0")
             self.movingy = False
 
-
-
-        
+    
+        #if rope.enemyCollide(self.xpos, self.ypos, map):
+           # print("hit")
 
     
     #COLLISION
-       
+    
     #down collision
-
-        print("isOnGround is", self.isOnGround)
-        #if map[int((self.ypos - self.y_offset+50) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2:
-
-        if map  [int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
-
+        if map[int((self.ypos - self.y_offset + self.frameHeight) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
             self.isOnGround = True
-            print("down collision!")
         else:
             self.isOnGround = False
     
     #up collision
-        #if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
-        #    self.vy+=3
+        if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth / 2) / 50)] == 2:
+            self.vy+=3
         
     #left collision
-        if map[int((self.xpos - self.x_offset - 10) / 50)] == 2 :
-            pass
-            #self.vx+=3
-            #print("left collision!")
+        if map[int((self.ypos - self.y_offset + self.frameHeight - 10) / 50)][int((self.xpos - self.x_offset - 10) / 50)] == 2 :
+            self.vx+=3
         
     #right collision
-        if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2 or map[int((self.ypos - self.y_offset+30) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] ==2:
-
-            #self.vx -= 4
-            pass
-            #print("right collision!")
-            self.vx -= 4
+        if map[int((self.ypos - self.y_offset) / 50)][int((self.xpos - self.x_offset + self.frameWidth + 5) / 50)] == 2:
+            self.vx-= 4
 
     #stop moving if you hit edge of screen (will be removed for scrolling)
         if self.xpos + self.frameWidth > 800:
@@ -188,12 +137,8 @@ class player:
         if self.xpos < 0:
             self.xpos+=3
 
-
-        #print("velocity is:", self.vx, self.vy)
-        print("velocity is:", self.vx, self.vy)
         self.xpos+=self.vx #update player xpos
-        self.y_offset += self.yOffVel
-       # self.ypos+=self.vy
+        self.ypos+=self.vy
     
     def ecollide(self, goombax, goombay):
         if self.lives > 0:
@@ -203,3 +148,4 @@ class player:
                         if goombay < self.ypos:
                             self.lives -= 1
                             return self.lives
+

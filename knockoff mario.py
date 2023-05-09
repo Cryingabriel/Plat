@@ -1,6 +1,7 @@
 import pygame
 import math
 from Player import player
+from enemy import Goomba
 
 pygame.init()  
 pygame.display.set_caption("Knockoff Mario")
@@ -41,20 +42,6 @@ timer = 0
 
 
 
-class Goomba():
-    def __init__(self, x, y):
-        self.xpos = x
-        self.ypos = y
-        self.direction = 1
-        self.vy = 0
-        self.isa = True
-    def move(self, time):
-        if ticker % 20==0:
-            self.xpos+= 1 *self.direction
-        return time
-    def draw(self, x_offset, y_offset):
-        if self.isa == True:
-            screen.blit(militree, (self.xpos + x_offset, self.ypos + y_offset))
 
 
 cBASS = Goomba(700,865)
@@ -239,7 +226,7 @@ while not gameover:
         gameover = True
     p1.move(keys, map)     
     #Move Goomba
-    cBASS.move(timer) 
+    cBASS.move(timer, ticker) 
     # RENDER--------------------------------------------------------------------------------
 
     screen.fill((66, 165, 245)) #wipe screen so it doesn't smear
@@ -257,13 +244,11 @@ while not gameover:
         ball.draw()
     #draw player
     p1.draw(screen, ticker)
-    #draw potato
-    if potato == True:
-        screen.blit(PotatoPic, (200 + p1.x_offset, 200 + p1.y_offset))
+    #draw potato     
     
 
     #Draw Goomba
-    cBASS.draw(p1.x_offset, p1.y_offset)
+    cBASS.draw(p1.x_offset, p1.y_offset, screen)
    
 
 
