@@ -2,6 +2,7 @@ import pygame
 import math
 from Player import player
 from enemy import Goomba
+from Rope import rope
 
 pygame.init()  
 pygame.display.set_caption("Knockoff Mario")
@@ -131,7 +132,7 @@ map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
 
 
 
-
+r1 = rope()
 p1 = player()
 
 #animation variables variables
@@ -180,7 +181,7 @@ while not gameover:
        
     ball.move()
 
-
+    r1.move(map, ticker, p1.xpos+p1.x_offset, p1.ypos+p1.y_offset, p1.x_offset, p1.y_offset)
 
 
     if cBASS.isa == True:
@@ -244,6 +245,7 @@ while not gameover:
         ball.draw()
     #draw player
     p1.draw(screen, ticker)
+    r1.draw(screen, p1.x_offset, p1.y_offset)
     #draw potato     
     
 
