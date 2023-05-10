@@ -248,6 +248,8 @@ while not gameover:
     r1.draw(screen, p1.x_offset, p1.y_offset)
     #draw potato     
     
+    if potato == True:
+        screen.blit(PotatoPic, (200 + p1.x_offset, 200 + p1.y_offset))
 
     #Draw Goomba
     cBASS.draw(p1.x_offset, p1.y_offset, screen)
