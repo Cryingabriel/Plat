@@ -45,7 +45,6 @@ timer = 0
 
 
 
-cBASS = Goomba(700,865)
 
 class fireball:
     def __init__(self):
@@ -99,7 +98,7 @@ map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
-       [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
+       [2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 ,0 ,0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
        [2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 2, 2, 2 ,2 ,2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 2],
@@ -132,7 +131,9 @@ map = [[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 ,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
 
 
 
-r1 = rope()
+r1 = rope(452, 1222)
+r2 = rope(462, 1050)
+r3 = rope(700,865)
 p1 = player()
 
 #animation variables variables
@@ -182,10 +183,9 @@ while not gameover:
     ball.move()
 
     r1.move(map, ticker, p1.xpos+p1.x_offset, p1.ypos+p1.y_offset, p1.x_offset, p1.y_offset)
+    r2.move(map, ticker, p1.xpos+p1.x_offset, p1.ypos+p1.y_offset, p1.x_offset, p1.y_offset)
+    r3.move(map, ticker, p1.xpos+p1.x_offset, p1.ypos+p1.y_offset, p1.x_offset, p1.y_offset)
 
-
-    if cBASS.isa == True:
-        p1.ecollide(cBASS.xpos, cBASS.ypos)
 
     #DOWN MOVEMENT
     #if keys[DOWN] == True:
@@ -226,8 +226,6 @@ while not gameover:
     if p1.lives <= 0:
         gameover = True
     p1.move(keys, map)     
-    #Move Goomba
-    cBASS.move(timer, ticker) 
     # RENDER--------------------------------------------------------------------------------
 
     screen.fill((66, 165, 245)) #wipe screen so it doesn't smear
@@ -245,6 +243,8 @@ while not gameover:
         ball.draw()
     #draw player
     r1.draw(screen, p1.x_offset, p1.y_offset)
+    r2.draw(screen, p1.x_offset, p1.y_offset)
+    r3.draw(screen, p1.x_offset, p1.y_offset)
     p1.draw(screen, ticker)
     
     #draw potato     
@@ -253,7 +253,6 @@ while not gameover:
         screen.blit(PotatoPic, (200 + p1.x_offset, 200 + p1.y_offset))
 
     #Draw Goomba
-    cBASS.draw(p1.x_offset, p1.y_offset, screen)
    
 
 

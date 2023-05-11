@@ -5,11 +5,14 @@ LEFT = 0
 RIGHT = 1
 UP = 2
 DOWN = 3
+militree = pygame.image.load("GoombaHeadaa.png")
+
+
 
 class rope:
-    def __init__(self):
-        self.xpos = 452
-        self.ypos = 1222
+    def __init__(self,xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
         self.direction = RIGHT
         self.isOnGround = False
         self.movingx = False
@@ -17,7 +20,7 @@ class rope:
         self.x_offset = 0
         self.y_offset = 0  
     def draw(self, screen, xoff, yoff):
-        screen.blit("GoombaHeadaa.png")(screen, (250, 0, 250), (self.xpos+xoff, self.ypos+yoff), 20)
+        screen.blit(militree, (self.xpos-15 + xoff, self.ypos-10 + yoff))
 
     def move(self, map, ticker,  px, py, xoff, yoff):
         #check if player is direct line of sight
@@ -39,19 +42,19 @@ class rope:
         elif ticker%40==0:
             num = random.randrange(0, 4)
             if num == 0:
-                self.direction == RIGHT
+                self.direction = RIGHT
             elif num == 1:
-                self.direction == LEFT
+                self.direction = LEFT
             elif num == 3:
-                self.direction == DOWN
+                self.direction = DOWN
      
 
 #        if self.isOnGround == False:
 #            if self.ypos < 810:
 #               self.vy = 3
 #            elif self.y_offset > -900:
-                self.y_offset-=3
-                self.vy = 0
+#                self.y_offset-=3
+#                self.vy = 0
 #            else:
 #                self.vy = 3
 #                self.direction = DOWN
@@ -61,13 +64,13 @@ class rope:
         
         
         #check for collision and change direction if you've bumped
-        if self.direction == RIGHT and map[int((self.ypos ) / 50)][int( (self.xpos +20 )  / 50)] ==2:
+        if self.direction == RIGHT and map[int((self.ypos ) / 50)][int( (self.xpos +10 )  / 50)] ==2:
             #print("bumped right!")
             self.direction = LEFT
         if self.direction == LEFT and map[int((self.ypos) / 50)][int( (self.xpos - 20 )  / 50)] ==2:
             #print("bumped left!")
             self.direction = DOWN
-        if self.direction == DOWN and map[int((self.ypos+ 30) / 50)][int( (self.xpos ) / 50)] == 2:
+        if self.direction == DOWN and map[int((self.ypos + 30) / 50)][int( (self.xpos + 15 ) / 50)] == 2:
             self.direction = RIGHT
 #            self.isOnGround = True
 #        else:
