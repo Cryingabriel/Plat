@@ -31,7 +31,7 @@ class rope:
                 if map[int((self.ypos ) / 50)][int( (self.xpos +30 )  / 50)] !=2:
                     self.xpos+=5
             elif px > self.xpos: #left
-                if map[int((self.ypos ) / 50)][int( (self.xpos )  / 50)] !=2:
+                if map[int((self.ypos ) / 50)][int( (self.xpos - 30 )  / 50)] !=2:
                     self.xpos-=5
        
 
@@ -42,11 +42,11 @@ class rope:
         elif ticker%40==0:
             num = random.randrange(0, 4)
             if num == 0:
-                self.direction = RIGHT
+                self.direction == RIGHT
             elif num == 1:
-                self.direction = LEFT
+                self.direction == LEFT
             elif num == 3:
-                self.direction = DOWN
+                self.direction == DOWN
      
 
 #        if self.isOnGround == False:
