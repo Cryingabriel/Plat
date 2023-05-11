@@ -244,8 +244,9 @@ while not gameover:
     if ball.isAlive == True:
         ball.draw()
     #draw player
-    p1.draw(screen, ticker)
     r1.draw(screen, p1.x_offset, p1.y_offset)
+    p1.draw(screen, ticker)
+    
     #draw potato     
     
 

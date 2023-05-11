@@ -39,23 +39,23 @@ class rope:
         elif ticker%40==0:
             num = random.randrange(0, 4)
             if num == 0:
-                self.direction = RIGHT
+                self.direction == RIGHT
             elif num == 1:
-                self.direction = LEFT
+                self.direction == LEFT
             elif num == 3:
-                self.direction = DOWN
+                self.direction == DOWN
      
 
-        if self.isOnGround == False:
-            if self.ypos < 810:
-                self.vy = 3
-            elif self.y_offset > -900:
+#        if self.isOnGround == False:
+#            if self.ypos < 810:
+#               self.vy = 3
+#            elif self.y_offset > -900:
                 self.y_offset-=3
                 self.vy = 0
-            else:
-                self.vy = 3
-                self.direction = DOWN
-            self.movingy = True
+#            else:
+#                self.vy = 3
+#                self.direction = DOWN
+#            self.movingy = True
         
         
         
@@ -66,21 +66,23 @@ class rope:
             self.direction = LEFT
         if self.direction == LEFT and map[int((self.ypos) / 50)][int( (self.xpos - 20 )  / 50)] ==2:
             #print("bumped left!")
+            self.direction = DOWN
+        if self.direction == DOWN and map[int((self.ypos+ 30) / 50)][int( (self.xpos ) / 50)] == 2:
             self.direction = RIGHT
-        if self.direction == DOWN and map[int((self.ypos) / 50)][int( (self.ypos + 20) / 50)] == 2:
-            self.isOnGround = True
-        else:
-            self.isOnGround = False
+#            self.isOnGround = True
+#        else:
+#            self.isOnGround = False
 
 
-        if self.direction == LEFT and self.xpos == 400:
-            self.direction = RIGHT
+        
        
 #or actually move!
         elif self.direction == RIGHT:
                 self.xpos += 5
         elif self.direction == LEFT:
                 self.xpos -= 5
+        elif self.direction == DOWN:
+                self.ypos += 5
 
 #    def enemyCollide(self, xpos, ypos):
 #        if self.xpos+20>self.xpos: #right side of player, left side of enemy
